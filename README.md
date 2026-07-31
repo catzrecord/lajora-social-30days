@@ -51,14 +51,16 @@ Required GitHub secrets:
 Repository variables:
 
 - `META_GRAPH_VERSION=v25.0`
-- `META_GRAPH_HOST=graph.facebook.com`
+- `META_GRAPH_HOST=graph.instagram.com`
 
 Manual checks:
 
 ```bash
 npm run cloud:plan
 gh workflow run lajora-instagram.yml -f mode=verify
+gh workflow run lajora-instagram.yml -f mode=preflight
 ```
 
 The older Chrome/LaunchAgent runner is retained only as a rollback tool and is
-unloaded after the cloud workflow passes its live verification.
+disabled after the cloud workflow passes live account and media-container
+verification.

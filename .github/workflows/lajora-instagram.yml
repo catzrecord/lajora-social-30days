@@ -14,6 +14,7 @@ on:
         type: choice
         options:
           - verify
+          - preflight
           - due
           - publish-id
       post_id:
@@ -44,12 +45,12 @@ jobs:
 
     steps:
       - name: Check out the queue
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Use Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: "22"
 

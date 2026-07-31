@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const planPath = path.join(root, "content-plan.json");
 const graphVersion = process.env.META_GRAPH_VERSION || "v25.0";
-const graphHost = process.env.META_GRAPH_HOST || "graph.facebook.com";
+const graphHost = process.env.META_GRAPH_HOST || "graph.instagram.com";
 const graphBase = `https://${graphHost}/${graphVersion}`;
 const accountId = process.env.INSTAGRAM_USER_ID;
 const accessToken = process.env.META_ACCESS_TOKEN;
@@ -237,6 +237,28 @@ async function main() {
       media_count: account.media_count ?? "",
       post_id: next?.id || "",
       asset_url: asset?.url || "",
+      now_wib: currentWib,
+    });
+    return;
+  }
+
+  if (mode === "preflight") {
+    const next = item || plan.find((entry) => entry.status === "queued_auto");
+    if (!next) {
+      await setOutput({ result: "no_post_due", now_wib: currentWib });
+      return;
+    }
+    const imageUrl = assetUrl(next);
+    await verifyAsset(imageUrl);
+    const container = await createContainer(next, imageUrl);
+    await waitForContainer(container.id);
+    await setOutput({
+      result: "preflight_ready",
+      username: account.username || "",
+      account_type: account.account_type || "",
+      post_id: next.id,
+      container_id: container.id,
+      asset_url: imageUrl,
       now_wib: currentWib,
     });
     return;
