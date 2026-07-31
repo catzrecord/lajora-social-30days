@@ -34,7 +34,7 @@ The production queue runs on GitHub-hosted Actions, so the Mac can stay off.
 
 - Workflow: `.github/workflows/lajora-instagram.yml`
 - Publisher: `scripts/publish_due.mjs`
-- Schedule: 09:07, 11:07, 13:07, 15:07, 18:07, and 21:07 WIB
+- Schedule: once daily at 09:07 WIB
 - Media host: `https://lajora-social-30days.vercel.app`
 - Queue ledger: successful posts update `content-plan.json` and redeploy the dashboard
 - Idempotency: published media is reconciled through its queue-specific alt text
