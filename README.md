@@ -38,6 +38,8 @@ The production queue runs on GitHub-hosted Actions, so the Mac can stay off.
 - Media host: `https://lajora-social-30days.vercel.app`
 - Queue ledger: successful posts update `content-plan.json` and redeploy the dashboard
 - Idempotency: published media is reconciled through its queue-specific alt text
+- Posts 10–30 use the versioned `editorial-system-v2-20260731` artwork set with
+  complete captions and abstract hospitality, website, payment, and branding cues
 
 Required GitHub secrets:
 
