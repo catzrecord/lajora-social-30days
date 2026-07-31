@@ -244,13 +244,12 @@ async function main() {
 
   if (mode === "deploy") {
     const next = item || plan.find((entry) => entry.status === "queued_auto");
-    const asset = next ? await verifyAsset(assetUrl(next)) : null;
     await setOutput({
       result: "deploy_ready",
       username: account.username || "",
       account_type: account.account_type || "",
       post_id: next?.id || "",
-      asset_url: asset?.url || "",
+      asset_url: next ? assetUrl(next) : "",
       now_wib: currentWib,
     });
     return;
