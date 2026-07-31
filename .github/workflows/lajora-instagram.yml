@@ -15,6 +15,7 @@ on:
         options:
           - verify
           - preflight
+          - deploy
           - due
           - publish-id
       post_id:
@@ -66,11 +67,11 @@ jobs:
         run: node scripts/publish_due.mjs
 
       - name: Rebuild the public queue dashboard
-        if: contains(fromJSON('["published","already_published"]'), steps.publisher.outputs.result)
+        if: contains(fromJSON('["published","already_published","deploy_ready"]'), steps.publisher.outputs.result)
         run: npm run build
 
       - name: Save the publishing ledger
-        if: contains(fromJSON('["published","already_published"]'), steps.publisher.outputs.result)
+        if: contains(fromJSON('["published","already_published","deploy_ready"]'), steps.publisher.outputs.result)
         shell: bash
         run: |
           git config user.name "lajora-publisher[bot]"
@@ -81,7 +82,7 @@ jobs:
           git push
 
       - name: Deploy the refreshed dashboard
-        if: contains(fromJSON('["published","already_published"]'), steps.publisher.outputs.result)
+        if: contains(fromJSON('["published","already_published","deploy_ready"]'), steps.publisher.outputs.result)
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}

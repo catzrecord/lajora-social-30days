@@ -59,6 +59,7 @@ Manual checks:
 npm run cloud:plan
 gh workflow run lajora-instagram.yml -f mode=verify
 gh workflow run lajora-instagram.yml -f mode=preflight
+gh workflow run lajora-instagram.yml -f mode=deploy
 ```
 
 The older Chrome/LaunchAgent runner is retained only as a rollback tool and is

@@ -242,6 +242,20 @@ async function main() {
     return;
   }
 
+  if (mode === "deploy") {
+    const next = item || plan.find((entry) => entry.status === "queued_auto");
+    const asset = next ? await verifyAsset(assetUrl(next)) : null;
+    await setOutput({
+      result: "deploy_ready",
+      username: account.username || "",
+      account_type: account.account_type || "",
+      post_id: next?.id || "",
+      asset_url: asset?.url || "",
+      now_wib: currentWib,
+    });
+    return;
+  }
+
   if (mode === "preflight") {
     const next = item || plan.find((entry) => entry.status === "queued_auto");
     if (!next) {
