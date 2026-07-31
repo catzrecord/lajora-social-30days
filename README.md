@@ -32,14 +32,19 @@ npm run build
 
 The production queue runs on GitHub-hosted Actions, so the Mac can stay off.
 
+Campaign theme: **The Seamless Stay** — one visual world connecting hotel and
+villa hospitality, website journeys, payment gateways, and brand identity.
+
 - Workflow: `.github/workflows/lajora-instagram.yml`
 - Publisher: `scripts/publish_due.mjs`
 - Schedule: once daily at 09:07 WIB
 - Media host: `https://lajora-social-30days.vercel.app`
 - Queue ledger: successful posts update `content-plan.json` and redeploy the dashboard
 - Idempotency: published media is reconciled through its queue-specific alt text
-- Posts 10–30 use the versioned `editorial-system-v2-20260731` artwork set with
-  complete captions and abstract hospitality, website, payment, and branding cues
+- Posts 10–30 use the versioned `editorial-system-v2-20260731` artwork set.
+- Posts 31–109 extend the same theme through 100 consecutive posting days,
+  ending 2026-11-08, with complete captions and abstract hospitality, website,
+  payment, and branding cues.
 
 Required GitHub secrets:
 
