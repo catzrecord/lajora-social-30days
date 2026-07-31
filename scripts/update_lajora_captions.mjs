@@ -194,6 +194,7 @@ for (const item of plan) {
     .join("\n\n");
   if (item.id >= 10) {
     item.visual_revision = "hospitality_web_payment_branding_abstract_v2";
+    item.asset_version = "service-system-v2-20260731";
     item.asset = `posts/editorial-system-v2-20260731/day-${String(item.id).padStart(2, "0")}.jpg`;
     item.public_asset_url = `PUBLIC_ASSET_BASE_URL/${item.asset}`;
   }

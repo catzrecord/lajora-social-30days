@@ -71,7 +71,10 @@ function selectItem(plan) {
 function assetUrl(item) {
   const relative = String(item.asset || "").replace(/^\/+/, "");
   if (!relative) throw new Error(`Post ${item.id} has no asset path`);
-  return `${assetBase}/${relative}`;
+  const url = new URL(`${assetBase}/${relative}`);
+  const version = String(item.asset_version || item.visual_revision || "").trim();
+  if (version) url.searchParams.set("v", version);
+  return url.toString();
 }
 
 function altText(item) {
