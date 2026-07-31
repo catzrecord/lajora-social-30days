@@ -1,0 +1,15 @@
+{
+  "name": "lajora-social-30days",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build_public.mjs",
+    "validate": "node scripts/validate.mjs",
+    "cloud:plan": "node scripts/publish_due.mjs --mode=plan",
+    "cloud:verify": "node scripts/publish_due.mjs --mode=verify"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.62.1"
+  }
+}

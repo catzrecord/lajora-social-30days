@@ -1,0 +1,100 @@
+name: Lajora Instagram Cloud Publisher
+
+on:
+  schedule:
+    # 09:07, 11:07, 13:07, 15:07, 18:07, and 21:07 WIB.
+    # GitHub cron uses UTC; WIB is UTC+7 and has no daylight-saving shift.
+    - cron: "7 2,4,6,8,11,14 * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Verify the connection or publish a queue item"
+        required: true
+        default: verify
+        type: choice
+        options:
+          - verify
+          - due
+          - publish-id
+      post_id:
+        description: "Queue ID used only with publish-id"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: lajora-instagram-publisher
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
+      INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+      PUBLIC_ASSET_BASE_URL: ${{ secrets.PUBLIC_ASSET_BASE_URL }}
+      META_GRAPH_VERSION: ${{ vars.META_GRAPH_VERSION }}
+      META_GRAPH_HOST: ${{ vars.META_GRAPH_HOST }}
+      META_DISCLOSE_AI: "true"
+      LAJORA_PUBLISH_MODE: ${{ github.event_name == 'schedule' && 'due' || inputs.mode }}
+      LAJORA_POST_ID: ${{ inputs.mode == 'publish-id' && inputs.post_id || '' }}
+
+    steps:
+      - name: Check out the queue
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Validate cloud configuration
+        shell: bash
+        run: |
+          test -n "$META_ACCESS_TOKEN"
+          test -n "$INSTAGRAM_USER_ID"
+          test -n "$PUBLIC_ASSET_BASE_URL"
+
+      - name: Verify or publish
+        id: publisher
+        run: node scripts/publish_due.mjs
+
+      - name: Rebuild the public queue dashboard
+        if: contains(fromJSON('["published","already_published"]'), steps.publisher.outputs.result)
+        run: npm run build
+
+      - name: Save the publishing ledger
+        if: contains(fromJSON('["published","already_published"]'), steps.publisher.outputs.result)
+        shell: bash
+        run: |
+          git config user.name "lajora-publisher[bot]"
+          git config user.email "lajora-publisher@users.noreply.github.com"
+          git add content-plan.json public/content-plan.json public/index.html
+          git diff --cached --quiet && exit 0
+          git commit -m "chore: record Instagram post ${{ steps.publisher.outputs.post_id }}"
+          git push
+
+      - name: Deploy the refreshed dashboard
+        if: contains(fromJSON('["published","already_published"]'), steps.publisher.outputs.result)
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: npx --yes vercel@54.20.0 deploy --prod --yes --token "$VERCEL_TOKEN"
+
+      - name: Workflow summary
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo "## Lajora Instagram publisher"
+            echo "- Result: \`${{ steps.publisher.outputs.result || 'workflow_failed' }}\`"
+            echo "- Post ID: \`${{ steps.publisher.outputs.post_id || '-' }}\`"
+            echo "- Instagram: ${{ steps.publisher.outputs.instagram_url || '-' }}"
+            echo "- Account: \`${{ steps.publisher.outputs.username || '-' }}\`"
+          } >> "$GITHUB_STEP_SUMMARY"

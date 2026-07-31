@@ -1,0 +1,38 @@
+{
+  "username": "lajora.brands",
+  "display_name": "Lajora — Hospitality Growth",
+  "category": "Marketing Agency",
+  "bio": "Branding, direct-booking websites & digital growth for hospitality.\nHotels • Villas • Restaurants\nBuild your owned system ↓",
+  "website": "https://lajora.web.id",
+  "public_email": "info@lajora.web.id",
+  "whatsapp": "+628111262838",
+  "location": "Indonesia",
+  "account_type": "Business",
+  "profile_photo": "profile-assets/lajora-avatar.png",
+  "highlights": [
+    {
+      "name": "Branding",
+      "cover": "profile-assets/highlight-branding.png"
+    },
+    {
+      "name": "Website",
+      "cover": "profile-assets/highlight-website.png"
+    },
+    {
+      "name": "Booking",
+      "cover": "profile-assets/highlight-booking.png"
+    },
+    {
+      "name": "Payment",
+      "cover": "profile-assets/highlight-payment.png"
+    },
+    {
+      "name": "Social",
+      "cover": "profile-assets/highlight-social.png"
+    },
+    {
+      "name": "Contact",
+      "cover": "profile-assets/highlight-contact.png"
+    }
+  ]
+}
