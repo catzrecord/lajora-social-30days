@@ -22,6 +22,11 @@ on:
         description: "Queue ID used only with publish-id"
         required: false
         type: string
+      force_token_refresh:
+        description: "Rotate and persist the renewable Meta token during this run"
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: write
@@ -36,11 +41,13 @@ jobs:
     timeout-minutes: 10
     env:
       META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
+      META_TOKEN_ENCRYPTION_KEY: ${{ secrets.META_TOKEN_ENCRYPTION_KEY }}
       INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
       PUBLIC_ASSET_BASE_URL: ${{ secrets.PUBLIC_ASSET_BASE_URL }}
       META_GRAPH_VERSION: ${{ vars.META_GRAPH_VERSION }}
       META_GRAPH_HOST: ${{ vars.META_GRAPH_HOST }}
       META_DISCLOSE_AI: "true"
+      META_TOKEN_FORCE_REFRESH: ${{ github.event_name == 'workflow_dispatch' && inputs.force_token_refresh || 'false' }}
       LAJORA_PUBLISH_MODE: ${{ github.event_name == 'schedule' && 'due' || inputs.mode }}
       LAJORA_POST_ID: ${{ inputs.mode == 'publish-id' && inputs.post_id || '' }}
 
@@ -59,8 +66,13 @@ jobs:
         shell: bash
         run: |
           test -n "$META_ACCESS_TOKEN"
+          test -n "$META_TOKEN_ENCRYPTION_KEY"
           test -n "$INSTAGRAM_USER_ID"
           test -n "$PUBLIC_ASSET_BASE_URL"
+
+      - name: Prepare renewable Meta token
+        id: token
+        run: node scripts/prepare_meta_token.mjs
 
       - name: Verify or publish
         id: publisher
@@ -71,14 +83,24 @@ jobs:
         run: npm run build
 
       - name: Save the publishing ledger
-        if: contains(fromJSON('["published","already_published","deploy_ready"]'), steps.publisher.outputs.result)
+        if: steps.token.outputs.state_changed == 'true' || contains(fromJSON('["published","already_published","deploy_ready"]'), steps.publisher.outputs.result)
         shell: bash
+        env:
+          PUBLISH_RESULT: ${{ steps.publisher.outputs.result }}
+          POST_ID: ${{ steps.publisher.outputs.post_id }}
         run: |
           git config user.name "lajora-publisher[bot]"
           git config user.email "lajora-publisher@users.noreply.github.com"
-          git add content-plan.json public/content-plan.json public/index.html
+          git add .state/meta-token.enc
+          if [[ "$PUBLISH_RESULT" == "published" || "$PUBLISH_RESULT" == "already_published" || "$PUBLISH_RESULT" == "deploy_ready" ]]; then
+            git add content-plan.json public/content-plan.json public/index.html
+          fi
           git diff --cached --quiet && exit 0
-          git commit -m "chore: record Instagram post ${{ steps.publisher.outputs.post_id }}"
+          if [[ "$PUBLISH_RESULT" == "published" || "$PUBLISH_RESULT" == "already_published" ]]; then
+            git commit -m "chore: record Instagram post $POST_ID"
+          else
+            git commit -m "chore: persist renewable Instagram token state"
+          fi
           git push
 
       - name: Deploy the refreshed dashboard
@@ -99,4 +121,6 @@ jobs:
             echo "- Post ID: \`${{ steps.publisher.outputs.post_id || '-' }}\`"
             echo "- Instagram: ${{ steps.publisher.outputs.instagram_url || '-' }}"
             echo "- Account: \`${{ steps.publisher.outputs.username || '-' }}\`"
+            echo "- Token: \`${{ steps.token.outputs.refresh_status || 'not_checked' }}\`"
+            echo "- Token lifetime: \`${{ steps.token.outputs.expires_in_days || '-' }} days\`"
           } >> "$GITHUB_STEP_SUMMARY"

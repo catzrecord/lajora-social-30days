@@ -49,6 +49,7 @@ villa hospitality, website journeys, payment gateways, and brand identity.
 Required GitHub secrets:
 
 - `META_ACCESS_TOKEN`
+- `META_TOKEN_ENCRYPTION_KEY`
 - `INSTAGRAM_USER_ID`
 - `PUBLIC_ASSET_BASE_URL`
 - `VERCEL_TOKEN`
@@ -59,6 +60,10 @@ Repository variables:
 
 - `META_GRAPH_VERSION=v25.0`
 - `META_GRAPH_HOST=graph.instagram.com`
+
+The workflow keeps the renewable Instagram token encrypted in
+`.state/meta-token.enc` and rotates it automatically before expiry. The
+encryption key remains in the `META_TOKEN_ENCRYPTION_KEY` repository secret.
 
 Manual checks:
 
