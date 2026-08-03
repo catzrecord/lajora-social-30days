@@ -2,9 +2,9 @@ name: Lajora Instagram Cloud Publisher
 
 on:
   schedule:
-    # Once daily at 09:07 WIB.
+    # Once daily at 17:17 WIB.
     # GitHub cron uses UTC; WIB is UTC+7 and has no daylight-saving shift.
-    - cron: "7 2 * * *"
+    - cron: "17 10 * * *"
   workflow_dispatch:
     inputs:
       mode:

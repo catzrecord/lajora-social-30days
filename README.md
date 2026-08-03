@@ -37,7 +37,7 @@ villa hospitality, website journeys, payment gateways, and brand identity.
 
 - Workflow: `.github/workflows/lajora-instagram.yml`
 - Publisher: `scripts/publish_due.mjs`
-- Schedule: once daily at 09:07 WIB
+- Schedule: once daily at 17:17 WIB
 - Media host: `https://lajora-social-30days.vercel.app`
 - Queue ledger: successful posts update `content-plan.json` and redeploy the dashboard
 - Idempotency: published media is reconciled through its queue-specific alt text
