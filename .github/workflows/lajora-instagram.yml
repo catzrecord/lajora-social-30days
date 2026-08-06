@@ -105,6 +105,7 @@ jobs:
 
       - name: Deploy the refreshed dashboard
         if: contains(fromJSON('["published","already_published","deploy_ready"]'), steps.publisher.outputs.result)
+        continue-on-error: true
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
