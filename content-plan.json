@@ -743,7 +743,7 @@
     "date": "2026-08-20",
     "time_wib": "09:00",
     "timezone": "Asia/Jakarta",
-    "status": "queued_auto",
+    "status": "published",
     "approval_required": false,
     "format": "image",
     "pillar": "Consistency",
@@ -760,7 +760,11 @@
     "contains_text": false,
     "language": "en",
     "visual_revision": "hospitality_web_payment_branding_abstract_v2",
-    "asset_version": "service-system-v2-20260731"
+    "asset_version": "service-system-v2-20260731",
+    "instagram_media_id": "18092799287453100",
+    "instagram_url": "https://www.instagram.com/p/DcYTGY0oJpL/",
+    "published_at": "2026-08-23T10:42:30+0000",
+    "published_via": "github_actions_graph_api"
   },
   {
     "id": 30,
