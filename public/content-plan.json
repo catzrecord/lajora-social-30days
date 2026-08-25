@@ -799,7 +799,7 @@
     "date": "2026-08-22",
     "time_wib": "09:00",
     "timezone": "Asia/Jakarta",
-    "status": "queued_auto",
+    "status": "published",
     "approval_required": false,
     "format": "image",
     "pillar": "Experience",
@@ -818,7 +818,11 @@
     "campaign_theme": "The Seamless Stay",
     "chapter": "Arrival Signals",
     "visual_revision": "the_seamless_stay_100d_v1",
-    "asset_version": "the-seamless-stay-100d-v1"
+    "asset_version": "the-seamless-stay-100d-v1",
+    "instagram_media_id": "17883191619682687",
+    "instagram_url": "https://www.instagram.com/p/DcddnfsGzVa/",
+    "published_at": "2026-08-25T10:50:35+0000",
+    "published_via": "github_actions_graph_api"
   },
   {
     "id": 32,
