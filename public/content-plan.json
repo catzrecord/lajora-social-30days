@@ -1129,7 +1129,7 @@
     "date": "2026-09-02",
     "time_wib": "09:00",
     "timezone": "Asia/Jakarta",
-    "status": "queued_auto",
+    "status": "published",
     "approval_required": false,
     "format": "object",
     "pillar": "Consistency",
@@ -1148,7 +1148,11 @@
     "campaign_theme": "The Seamless Stay",
     "chapter": "Rooms with a System",
     "visual_revision": "the_seamless_stay_100d_v1",
-    "asset_version": "the-seamless-stay-100d-v1"
+    "asset_version": "the-seamless-stay-100d-v1",
+    "instagram_media_id": "18105543524230792",
+    "instagram_url": "https://www.instagram.com/p/Dc6EUiRoBCj/",
+    "published_at": "2026-09-05T13:27:31+0000",
+    "published_via": "github_actions_graph_api"
   },
   {
     "id": 43,
