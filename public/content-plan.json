@@ -1849,7 +1849,7 @@
     "date": "2026-09-26",
     "time_wib": "09:00",
     "timezone": "Asia/Jakarta",
-    "status": "queued_auto",
+    "status": "published",
     "approval_required": false,
     "format": "mixed",
     "pillar": "Consistency",
@@ -1868,7 +1868,11 @@
     "campaign_theme": "The Seamless Stay",
     "chapter": "The Trusted Gateway",
     "visual_revision": "the_seamless_stay_100d_v1",
-    "asset_version": "the-seamless-stay-100d-v1"
+    "asset_version": "the-seamless-stay-100d-v1",
+    "instagram_media_id": "18106198472227996",
+    "instagram_url": "https://www.instagram.com/p/Dd4MdNRlG06/",
+    "published_at": "2026-09-29T16:31:31+0000",
+    "published_via": "github_actions_graph_api"
   },
   {
     "id": 67,
