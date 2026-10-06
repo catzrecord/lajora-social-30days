@@ -2059,7 +2059,7 @@
     "date": "2026-10-03",
     "time_wib": "09:00",
     "timezone": "Asia/Jakarta",
-    "status": "queued_auto",
+    "status": "published",
     "approval_required": false,
     "format": "image",
     "pillar": "Craft",
@@ -2078,7 +2078,11 @@
     "campaign_theme": "The Seamless Stay",
     "chapter": "The Villa as a Brand",
     "visual_revision": "the_seamless_stay_100d_v1",
-    "asset_version": "the-seamless-stay-100d-v1"
+    "asset_version": "the-seamless-stay-100d-v1",
+    "instagram_media_id": "17890265763683530",
+    "instagram_url": "https://www.instagram.com/p/DeKQEVsldW-/",
+    "published_at": "2026-10-06T16:49:30+0000",
+    "published_via": "github_actions_graph_api"
   },
   {
     "id": 74,
