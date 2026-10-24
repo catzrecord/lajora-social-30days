@@ -2599,7 +2599,7 @@
     "date": "2026-10-21",
     "time_wib": "09:00",
     "timezone": "Asia/Jakarta",
-    "status": "queued_auto",
+    "status": "published",
     "approval_required": false,
     "format": "image",
     "pillar": "Personality",
@@ -2618,7 +2618,11 @@
     "campaign_theme": "The Seamless Stay",
     "chapter": "One Living Identity",
     "visual_revision": "the_seamless_stay_100d_v1",
-    "asset_version": "the-seamless-stay-100d-v1"
+    "asset_version": "the-seamless-stay-100d-v1",
+    "instagram_media_id": "18033952337854660",
+    "instagram_url": "https://www.instagram.com/p/De4TJ60m17C/",
+    "published_at": "2026-10-24T14:01:27+0000",
+    "published_via": "github_actions_graph_api"
   },
   {
     "id": 92,
